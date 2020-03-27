@@ -1,5 +1,3 @@
-package main.java;
-
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -10,9 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
+import dialogs.ErrorDialogBuilder;
+import dialogs.SimpleDialogBuilder;
 import javafx.application.Platform;
-import main.java.dialogs.ErrorDialogBuilder;
-import main.java.dialogs.SimpleDialogBuilder;
 
 /**
  * Adds this app to the system tray when first run.

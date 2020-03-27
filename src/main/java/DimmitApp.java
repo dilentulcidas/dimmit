@@ -1,8 +1,7 @@
-package main.java;
 
+import dialogs.ErrorDialogBuilder;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import main.java.dialogs.ErrorDialogBuilder;
 
 public class DimmitApp extends Application {
 
@@ -25,7 +24,6 @@ public class DimmitApp extends Application {
                     .showAndShutdown();
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);

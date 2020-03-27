@@ -1,8 +1,6 @@
-package main.java;
-
 import java.util.Locale;
 
-import main.java.runner.OSType;
+import runner.OSType;
 
 /**
  * Checks which operating system the user is running

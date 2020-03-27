@@ -1,4 +1,4 @@
-package main.java.dialogs;
+package dialogs;
 
 import java.util.Optional;
 

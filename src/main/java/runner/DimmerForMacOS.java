@@ -1,4 +1,4 @@
-package main.java.runner;
+package runner;
 
 public class DimmerForMacOS implements DimmerRunner
 {
