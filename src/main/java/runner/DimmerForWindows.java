@@ -1,13 +1,12 @@
 package runner;
 
-import static com.sun.jna.platform.win32.WinDef.*;
-
+import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import runner.windows.MonitorInfo;
+import runner.windows.MonitorsInfoRetriever;
 
 /**
  * Uses WMI powershell queries to get the current brightness and set the brightness.
@@ -31,18 +30,21 @@ public class DimmerForWindows implements DimmerRunner
         // and revert to previous brightness values before dim
 
         // experiment. print every second
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                System.out.println("There's full screen: "+isAppInFullScreen());
-            }
-        }, 0, 1000);
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                System.out.println("There's full screen: "+isAppInFullScreen());
+//            }
+//        }, 0, 1000);
+
+        List<MonitorInfo> monitorInfos = MonitorsInfoRetriever.get();
+        monitorInfos.forEach(e -> System.out.println(e.getMonitorId() + ":" + e.getScreenSize() + ":" + e.isPrimary() + ":" + e.getCurrentBrightness()));
     }
 
-    static class WindowsBrightnessManager
+    static class BrightnessManager
     {
         /**
          * Get the current brightness levels of all monitors
@@ -62,16 +64,30 @@ public class DimmerForWindows implements DimmerRunner
         }
     }
 
+    static class FullScreenDetector
+    {
+        /**
+         * Checks all monitors whether there's an active app
+         * with full screen.
+         *
+         * @return Map of format {monitor_id, hasFullScreen}
+         */
+        private static Map<String, Boolean> getDisplaysAndFullScreenValue()
+        {
+            return null;
+        }
+    }
+
     /**
-     * todo: issue is that if you have fullscreen in another display it doesnt
-     * detect as full screen...
-     *
-     * just detects full screen in one monitor
+     * Detects if the active app in the main monitor is in full screen or not.
+     * Ideally we want to check for all monitors and not just the main monitor...
      *
      * Source: https://stackoverflow.com/a/60501359/9988736
      */
-    public static boolean isAppInFullScreen()
+    private boolean isAppInFullScreenInMainMonitor()
     {
+        // todo: find a way to get the foreground window for all monitors. we got the desktopwindow size
+
         // Get the active window
         WinDef.HWND activeWindow = User32.INSTANCE.GetForegroundWindow();
         // Get the desktop window (will represent the whole screen space)
@@ -85,6 +101,7 @@ public class DimmerForWindows implements DimmerRunner
         User32.INSTANCE.GetWindowRect(activeWindow, activeRectangle);
         User32.INSTANCE.GetWindowRect(desktopWindow, desktopWindowRectangle);
 
+        System.out.println("Desktop: "+desktopWindowRectangle.toString()+ " !!!!! active window: "+activeRectangle.toString());
         return activeRectangle.toString().equals( desktopWindowRectangle.toString() );
     }
 }
