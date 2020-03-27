@@ -1,17 +1,17 @@
-package runner;
+package dimmer;
 
 public enum OSType
 {
     Windows {
         @Override
-        public DimmerRunner getDimmerRunner()
+        public DimmerManager getDimmerRunner()
         {
             return new DimmerForWindows();
         }
     },
     MacOS {
         @Override
-        public DimmerRunner getDimmerRunner()
+        public DimmerManager getDimmerRunner()
         {
             // todo: not implemented
             return new DimmerForMacOS();
@@ -19,12 +19,12 @@ public enum OSType
     },
     Linux {
         @Override
-        public DimmerRunner getDimmerRunner()
+        public DimmerManager getDimmerRunner()
         {
             // todo: not implemented
             return new DimmerForLinux();
         }
     };
 
-    public abstract DimmerRunner getDimmerRunner();
+    public abstract DimmerManager getDimmerRunner();
 }

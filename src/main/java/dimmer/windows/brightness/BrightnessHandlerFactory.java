@@ -1,4 +1,4 @@
-package runner.windows.brightness;
+package dimmer.windows.brightness;
 
 import com.sun.jna.platform.win32.WinDef;
 

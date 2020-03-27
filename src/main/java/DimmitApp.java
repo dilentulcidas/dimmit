@@ -1,5 +1,6 @@
 
 import dialogs.ErrorDialogBuilder;
+import dimmer.DimmerManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,13 +10,11 @@ public class DimmitApp extends Application {
     public void start(Stage primaryStage) {
         try
         {
-            // Run the dimmer in the background
-            OSDetector.getOperatingSystemType()
-                    .getDimmerRunner()
-                    .run();
+            // Fetches all the monitors available and sets up the dim handlers for when the user ticks/unticks a monitor
+            DimmerManager dimmerManager = OSDetector.getOperatingSystemType().getDimmerRunner();
 
             // Add system tray
-            TrayAdder.addDimmerIconToTray();
+            TrayAdder.addDimmerIconToTray(dimmerManager);
         }
         catch (Exception e)
         {

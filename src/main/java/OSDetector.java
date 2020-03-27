@@ -1,6 +1,6 @@
 import java.util.Locale;
 
-import runner.OSType;
+import dimmer.OSType;
 
 /**
  * Checks which operating system the user is running

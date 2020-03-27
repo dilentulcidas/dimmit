@@ -1,4 +1,4 @@
-package runner.windows.brightness;
+package dimmer.windows.brightness;
 
 public interface BrightnessHandler
 {

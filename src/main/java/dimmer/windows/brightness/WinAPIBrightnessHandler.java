@@ -1,4 +1,4 @@
-package runner.windows.brightness;
+package dimmer.windows.brightness;
 
 import com.sun.jna.platform.win32.WinDef;
 
@@ -10,7 +10,6 @@ import com.sun.jna.platform.win32.WinDef;
  */
 public class WinAPIBrightnessHandler implements BrightnessHandler
 {
-
     private final WinDef.DWORDByReference pdwCurrentBrightness;
 
     WinAPIBrightnessHandler(WinDef.DWORDByReference pdwCurrentBrightness)
