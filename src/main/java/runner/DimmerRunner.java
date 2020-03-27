@@ -1,4 +1,4 @@
-package sample.runner;
+package main.java.runner;
 
 /**
  * Covers the implementation of the dimmer for each of the supported operating systems.

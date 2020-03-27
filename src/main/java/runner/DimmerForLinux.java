@@ -1,4 +1,4 @@
-package sample.runner;
+package main.java.runner;
 
 public class DimmerForLinux implements DimmerRunner
 {

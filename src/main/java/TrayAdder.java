@@ -1,4 +1,4 @@
-package sample;
+package main.java;
 
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -11,8 +11,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
-import sample.dialogs.ErrorDialogBuilder;
-import sample.dialogs.SimpleDialogBuilder;
+import main.java.dialogs.ErrorDialogBuilder;
+import main.java.dialogs.SimpleDialogBuilder;
 
 /**
  * Adds this app to the system tray when first run.

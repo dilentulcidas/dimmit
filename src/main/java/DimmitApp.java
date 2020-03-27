@@ -1,8 +1,8 @@
-package sample;
+package main.java;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.dialogs.ErrorDialogBuilder;
+import main.java.dialogs.ErrorDialogBuilder;
 
 public class DimmitApp extends Application {
 

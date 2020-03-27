@@ -1,4 +1,4 @@
-package sample.dialogs;
+package main.java.dialogs;
 
 import java.util.function.Supplier;
 
