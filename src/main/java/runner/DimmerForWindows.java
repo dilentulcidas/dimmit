@@ -87,7 +87,8 @@ public class DimmerForWindows implements DimmerRunner
     private boolean isAppInFullScreenInMainMonitor()
     {
         // todo: find a way to get the foreground window for all monitors. we got the desktopwindow size
-
+        // todo: find a way to get the accurate brightness levels for the laptop screen (shows zero)
+        
         // Get the active window
         WinDef.HWND activeWindow = User32.INSTANCE.GetForegroundWindow();
         // Get the desktop window (will represent the whole screen space)

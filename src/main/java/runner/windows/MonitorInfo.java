@@ -10,9 +10,9 @@ public class MonitorInfo
     private final String monitorId;
     private final WinDef.RECT screenSize;
     private final boolean isPrimary;
-    private final WinDef.DWORD currentBrightness;
+    private final String currentBrightness;
 
-    public MonitorInfo(String monitorId, WinDef.RECT screenSize, boolean isPrimary, WinDef.DWORD currentBrightness)
+    public MonitorInfo(String monitorId, WinDef.RECT screenSize, boolean isPrimary, String currentBrightness)
     {
         this.monitorId = monitorId;
         this.screenSize = screenSize;
@@ -35,7 +35,7 @@ public class MonitorInfo
         return isPrimary;
     }
 
-    public WinDef.DWORD getCurrentBrightness()
+    public String getCurrentBrightness()
     {
         return currentBrightness;
     }

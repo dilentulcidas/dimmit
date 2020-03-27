@@ -65,13 +65,6 @@ public class TrayAdder
 
     private static PopupMenu createPopupMenu(SystemTray systemTray, TrayIcon trayIcon)
     {
-        // Set up exit menu item for the popup
-        MenuItem exitItem = new MenuItem("Exit");
-        exitItem.addActionListener(event -> {
-            Platform.exit();
-            systemTray.remove(trayIcon);
-        });
-
         // Set up `About` menu item
         MenuItem aboutItem = new MenuItem("About");
         aboutItem.addActionListener(event -> {
@@ -79,10 +72,17 @@ public class TrayAdder
                 SimpleDialogBuilder.create()
                         .setTitle("About")
                         .setContentText("Dimmer is a lightweight application suitable for multiple displays.\n\n" +
-                                "Dims the other displays except the displays which have a full screen app open. " +
-                                "Reverts to former brightness levels when full screen app is exited.\n\n" +
+                                "Select which monitors you want to keep undimmed and this app will dim the remaining connected monitors to the minimum brightness. " +
+                                "Reverts to the previous brightness values once you're happy to have all monitors undimmed.\n\n" +
                                 "Developed by Johnny Deep ©2020")
                         .show());
+        });
+
+        // Set up exit menu item for the popup
+        MenuItem exitItem = new MenuItem("Exit");
+        exitItem.addActionListener(event -> {
+            Platform.exit();
+            systemTray.remove(trayIcon);
         });
 
         PopupMenu popupMenu = new PopupMenu();

@@ -11,6 +11,8 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.platform.win32.WinUser;
+import runner.windows.brightness.BrightnessHandlerFactory;
+import runner.windows.brightness.BrightnessValuesHolder;
 
 /**
  * Gets information of the each of the connected monitors
@@ -53,6 +55,10 @@ public class MonitorsInfoRetriever
         WinUser.MONITORINFOEX info = new WinUser.MONITORINFOEX();
         User32.INSTANCE.GetMonitorInfo(hMonitor, info);
 
+        String monitorId = hMonitor.getPointer().toString();
+        WinDef.RECT screenSize = info.rcMonitor;
+        boolean isPrimary = (info.dwFlags & WinUser.MONITORINFOF_PRIMARY) != 0;
+
         // Get monitor count
         WinDef.DWORDByReference pdwNumberOfPhysicalMonitors = new WinDef.DWORDByReference();
         Dxva2.INSTANCE.GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor, pdwNumberOfPhysicalMonitors);
@@ -72,13 +78,8 @@ public class MonitorsInfoRetriever
             WinDef.DWORDByReference pdwMinimumBrightness = new WinDef.DWORDByReference();
             WinDef.DWORDByReference pdwCurrentBrightness = new WinDef.DWORDByReference();
             WinDef.DWORDByReference pdwMaximumBrightness = new WinDef.DWORDByReference();
-            Dxva2.INSTANCE.GetMonitorBrightness(physicalMonitorHandle, pdwMinimumBrightness, pdwCurrentBrightness, pdwMaximumBrightness);
-
-            // Gather all the values we need
-            String monitorId = hMonitor.getPointer().toString();
-            WinDef.RECT screenSize = info.rcMonitor;
-            boolean isPrimary = (info.dwFlags & WinUser.MONITORINFOF_PRIMARY) != 0;
-            WinDef.DWORD currentBrightness = pdwCurrentBrightness.getValue();
+            WinDef.BOOL bool = Dxva2.INSTANCE.GetMonitorBrightness(physicalMonitorHandle, pdwMinimumBrightness, pdwCurrentBrightness, pdwMaximumBrightness);
+            String currentBrightness = BrightnessHandlerFactory.get(bool, new BrightnessValuesHolder(monitorId, pdwCurrentBrightness)).getCurrentBrightness();
 
             // Add the monitor info we gathered into the list
             MONITOR_INFO_LIST.add(new MonitorInfo(monitorId, screenSize, isPrimary, currentBrightness));

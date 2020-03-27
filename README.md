@@ -1,2 +1,2 @@
 # Dimmit
-For multiple displays setup. When one of the monitors has a fullscreen app runing then dim the other monitor's brightness to the mininum. Revert back to former values when fullscreen app is exited.
+For multiple displays setup. Select which monitors you want to keep undimmed and this app will dim the remaining connected monitors to the minimum brightness. Reverts to the previous brightness values once you're happy to have all monitors undimmed.
