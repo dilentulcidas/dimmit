@@ -1,5 +1,9 @@
 package dimmer;
 
+/**
+ * DimmerManager initializer class. The manager will load all the available monitors connected to the system
+ * at first launch.
+ */
 public enum OSType
 {
     Windows {

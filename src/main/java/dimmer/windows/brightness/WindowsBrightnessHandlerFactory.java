@@ -13,11 +13,11 @@ public class WindowsBrightnessHandlerFactory
     {
         if (monitor.isBrightnessDynamicallyAdjustable())
         {
-            return new WMIBrightnessHandler();
+            return new WMIBrightnessHandler(monitor);
         }
         else
         {
-            return new WinAPIBrightnessHandler();
+            return new WinAPIBrightnessHandler(monitor);
         }
     }
 }

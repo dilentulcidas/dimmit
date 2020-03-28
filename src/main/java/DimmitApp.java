@@ -10,7 +10,7 @@ public class DimmitApp extends Application {
     public void start(Stage primaryStage) {
         try
         {
-            // Fetches all the monitors available and sets up the dim handlers for when the user ticks/unticks a monitor
+            // At first launch will fetches all the monitors connected to the system
             DimmerManager dimmerManager = OSDetector.getOperatingSystemType().getDimmerRunner();
 
             // Add system tray

@@ -8,24 +8,26 @@ import dimmer.MonitorInfo;
 class MonitorCheckItems
 {
     private static List<CheckboxMenuItem> CHECK_MENU_ITEMS;
+    private static final String PRIMARY_IDENTIFIER = " - [Primary]";
 
     static List<? extends CheckboxMenuItem> from(DimmerManager dimmerManager)
     {
         if (CHECK_MENU_ITEMS == null)
         {
             CHECK_MENU_ITEMS = dimmerManager.getInformationOfAllMonitors().stream()
-                    .map(mInfo -> createMonitorItem(dimmerManager, mInfo.getMonitorId(), mInfo.isPrimary()))
+                    .map(mInfo -> createMonitorItem(dimmerManager, mInfo))
                     .collect(Collectors.toList());
         }
         return CHECK_MENU_ITEMS;
     }
 
-    private static CheckboxMenuItem createMonitorItem(DimmerManager dimmerManager, String monitorId, boolean isPrimary)
+    private static CheckboxMenuItem createMonitorItem(DimmerManager dimmerManager, MonitorInfo monitorInfo)
     {
-        CheckboxMenuItem checkMenuItem = new CheckboxMenuItem(monitorId + ((isPrimary) ? " [Primary]" : ""));
+        CheckboxMenuItem checkMenuItem = new CheckboxMenuItem(monitorInfo.getMenuItemName() + ((monitorInfo.isPrimary()) ? PRIMARY_IDENTIFIER : ""));
+        checkMenuItem.setName(monitorInfo.getMonitorId()); // The checkmenuitem's name will store the monitor's model
         checkMenuItem.addItemListener(e -> {
             MonitorInfo changedMonitorInfo = dimmerManager.findByMonitorId(
-                    checkMenuItem.getLabel().replace(" [Primary]", ""));
+                    checkMenuItem.getName().replace(PRIMARY_IDENTIFIER, ""));
 
             if (checkMenuItem.getState())
             {
@@ -52,7 +54,7 @@ class MonitorCheckItems
     {
         return CHECK_MENU_ITEMS.stream()
                 .filter(CheckboxMenuItem::getState)
-                .map(menuItem -> menuItem.getLabel().replace(" [Primary]", ""))
+                .map(menuItem -> menuItem.getName().replace(PRIMARY_IDENTIFIER, ""))
                 .map(dimmerManager::findByMonitorId)
                 .collect(Collectors.toList());
     }
