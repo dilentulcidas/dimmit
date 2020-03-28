@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dimmer.DimmerManager;
+import dimmer.MonitorInfo;
 
 class MonitorCheckItems
 {
@@ -23,10 +24,12 @@ class MonitorCheckItems
     {
         CheckboxMenuItem checkMenuItem = new CheckboxMenuItem(monitorId + ((isPrimary) ? " [Primary]" : ""));
         checkMenuItem.addItemListener(e -> {
-            String changedMonitorId = checkMenuItem.getLabel().replace(" [Primary]", "");
+            MonitorInfo changedMonitorInfo = dimmerManager.findByMonitorId(
+                    checkMenuItem.getLabel().replace(" [Primary]", ""));
+
             if (checkMenuItem.getState())
             {
-                dimmerManager.dimAllExcept(getCheckedMonitorIds());
+                dimmerManager.dimAllExcept(getCheckedMonitorIds(dimmerManager));
             }
             else
             {
@@ -34,22 +37,23 @@ class MonitorCheckItems
                 // If they are then revert the brightness back to original values. Otherwise dim the monitor that was just unticked.
                 if (areAllMonitorsUnchecked())
                 {
-                    dimmerManager.undim(changedMonitorId);
+                    dimmerManager.undim(changedMonitorInfo);
                 }
                 else
                 {
-                    dimmerManager.dim(changedMonitorId);
+                    dimmerManager.dim(changedMonitorInfo);
                 }
             }
         });
         return checkMenuItem;
     }
 
-    private static List<String> getCheckedMonitorIds()
+    private static List<MonitorInfo> getCheckedMonitorIds(DimmerManager dimmerManager)
     {
         return CHECK_MENU_ITEMS.stream()
                 .filter(CheckboxMenuItem::getState)
                 .map(menuItem -> menuItem.getLabel().replace(" [Primary]", ""))
+                .map(dimmerManager::findByMonitorId)
                 .collect(Collectors.toList());
     }
 

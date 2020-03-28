@@ -10,23 +10,26 @@ public interface DimmerManager
 {
     List<MonitorInfo> getInformationOfAllMonitors();
 
+    MonitorInfo findByMonitorId(String monitorId);
+
     /**
      * Dims all the monitors except the monitors with the given ids
      *
-     * @param selectedMonitorIds monitor items that are ticked
+     * @param selectedMonitors monitor items that are ticked
      */
-    void dimAllExcept(List<String> selectedMonitorIds);
+    void dimAllExcept(List<MonitorInfo> selectedMonitors);
 
     /**
      * Dims the monitor with the provided id
      *
-     * @param monitorId Monitor to dim
+     * @param monitorInfo Monitor to dim
      */
-    void dim(String monitorId);
+    void dim(MonitorInfo monitorInfo);
 
     /**
-     * Undims the monitor with the provided id
-     * @param monitorId Monitor to undim
+     * Undims the monitor with corresponds to the provided obj
+     *
+     * @param monitorInfo Monitor to undim
      */
-    void undim(String monitorId);
+    void undim(MonitorInfo monitorInfo);
 }

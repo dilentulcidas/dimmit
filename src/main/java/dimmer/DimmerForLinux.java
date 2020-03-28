@@ -11,19 +11,25 @@ public class DimmerForLinux implements DimmerManager
     }
 
     @Override
-    public void dimAllExcept(List<String> selectedMonitorIds)
+    public MonitorInfo findByMonitorId(String monitorId)
     {
         throw new IllegalStateException("Operating system not supported!");
     }
 
     @Override
-    public void dim(String monitorId)
+    public void dimAllExcept(List<MonitorInfo> selectedMonitors)
     {
         throw new IllegalStateException("Operating system not supported!");
     }
 
     @Override
-    public void undim(String monitorId)
+    public void dim(MonitorInfo monitorInfo)
+    {
+        throw new IllegalStateException("Operating system not supported!");
+    }
+
+    @Override
+    public void undim(MonitorInfo monitorInfo)
     {
         throw new IllegalStateException("Operating system not supported!");
     }

@@ -1,7 +1,6 @@
 package dimmer.windows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +11,6 @@ import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinNT;
 import com.sun.jna.platform.win32.WinUser;
 import dimmer.MonitorInfo;
-import dimmer.windows.brightness.BrightnessHandlerFactory;
-import dimmer.windows.brightness.BrightnessValuesHolder;
 
 /**
  * Gets information of the each of the connected monitors
@@ -59,7 +56,35 @@ public class WindowsMonitorsInfoRetriever
         String monitorId = hMonitor.getPointer().toString();
         boolean isPrimary = (info.dwFlags & WinUser.MONITORINFOF_PRIMARY) != 0;
 
-        // Add the monitor info we gathered into the list
-        MONITOR_INFO_LIST.add(new MonitorInfo(monitorId, isPrimary));
+        // Get monitor count
+        WinDef.DWORDByReference pdwNumberOfPhysicalMonitors = new WinDef.DWORDByReference();
+        Dxva2.INSTANCE.GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor, pdwNumberOfPhysicalMonitors);
+        int monitorCount = pdwNumberOfPhysicalMonitors.getValue().intValue();
+
+        // Note: we're going to assume each HMONITOR obj is always linked to one physical monitor. Not sure how
+        // you can have more than one linked to the same object...
+        if (monitorCount > 0)
+        {
+            // Load the monitor HANDLE obj
+            PhysicalMonitorEnumerationAPI.PHYSICAL_MONITOR[] physMons = new PhysicalMonitorEnumerationAPI.PHYSICAL_MONITOR[monitorCount];
+            Dxva2.INSTANCE.GetPhysicalMonitorsFromHMONITOR(hMonitor, monitorCount, physMons);
+
+            WinNT.HANDLE physicalMonitorHandle = physMons[0].hPhysicalMonitor;
+
+            // Get current brightness - if the result is false means that the monitor doesn't support
+            // the `getMonitorBrightness` function. Which means it changes the brightness dynamically through software.
+            WinDef.DWORDByReference pdwMinimumBrightness = new WinDef.DWORDByReference();
+            WinDef.DWORDByReference pdwCurrentBrightness = new WinDef.DWORDByReference();
+            WinDef.DWORDByReference pdwMaximumBrightness = new WinDef.DWORDByReference();
+            WinDef.BOOL isBrightnessAdjustablePhysically = Dxva2.INSTANCE.GetMonitorBrightness(physicalMonitorHandle, pdwMinimumBrightness, pdwCurrentBrightness, pdwMaximumBrightness);
+            boolean isBrightnessDynamicallyAdjustable = !isBrightnessAdjustablePhysically.booleanValue();
+
+            // Add the monitor info we gathered into the list
+            MONITOR_INFO_LIST.add(new MonitorInfo(monitorId, isPrimary, isBrightnessDynamicallyAdjustable));
+        }
+        else
+        {
+            System.out.println("Device "+ info.szDevice + "has zero physical monitors linked! Do nothing...");
+        }
     }
 }

@@ -1,7 +1,7 @@
 package dimmer.windows.brightness;
 
-public interface BrightnessHandler
+public interface WindowsBrightnessHandler
 {
-    void setBrightness();
     String getCurrentBrightness();
+    void setBrightnessToZero();
 }

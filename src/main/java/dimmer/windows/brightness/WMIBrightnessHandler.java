@@ -10,19 +10,14 @@ import com.profesorfalken.wmi4java.WMI4Java;
  *
  * We'll use powershell queries to get/set this.
  *
- * todo: find a way to pass the instancename
+ * todo: find a way to know which monitor id (InstanceName) we're dealing with so we get the correct brightness value
  */
-public class WMIBrightnessHandler implements BrightnessHandler
+public class WMIBrightnessHandler implements WindowsBrightnessHandler
 {
-    @Override
-    public void setBrightness()
-    {
-
-    }
-
     @Override
     public String getCurrentBrightness()
     {
+        // todo
         Map<String, String> wmiObjectProperties =
                 WMI4Java.get()
                         .namespace("root/WMI")
@@ -31,5 +26,11 @@ public class WMIBrightnessHandler implements BrightnessHandler
         System.out.println(wmiObjectProperties);
 
         return "-1";
+    }
+
+    @Override
+    public void setBrightnessToZero()
+    {
+        // todo
     }
 }

@@ -7,11 +7,13 @@ public class MonitorInfo
 {
     private final String monitorId;
     private final boolean isPrimary;
+    private final boolean isBrightnessDynamicallyAdjustable;
 
-    public MonitorInfo(String monitorId, boolean isPrimary)
+    public MonitorInfo(String monitorId, boolean isPrimary, boolean isBrightnessDynamicallyAdjustable)
     {
         this.monitorId = monitorId;
         this.isPrimary = isPrimary;
+        this.isBrightnessDynamicallyAdjustable = isBrightnessDynamicallyAdjustable;
     }
 
     public String getMonitorId()
@@ -22,5 +24,10 @@ public class MonitorInfo
     public boolean isPrimary()
     {
         return isPrimary;
+    }
+
+    public boolean isBrightnessDynamicallyAdjustable()
+    {
+        return isBrightnessDynamicallyAdjustable;
     }
 }

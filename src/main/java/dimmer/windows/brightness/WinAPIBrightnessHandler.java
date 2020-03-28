@@ -8,24 +8,18 @@ import com.sun.jna.platform.win32.WinDef;
  *
  * We'll use the following API: https://docs.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/nf-highlevelmonitorconfigurationapi-setmonitorbrightness?redirectedfrom=MSDN
  */
-public class WinAPIBrightnessHandler implements BrightnessHandler
+public class WinAPIBrightnessHandler implements WindowsBrightnessHandler
 {
-    private final WinDef.DWORDByReference pdwCurrentBrightness;
-
-    WinAPIBrightnessHandler(WinDef.DWORDByReference pdwCurrentBrightness)
-    {
-        this.pdwCurrentBrightness = pdwCurrentBrightness;
-    }
-
-    @Override
-    public void setBrightness()
-    {
-
-    }
-
     @Override
     public String getCurrentBrightness()
     {
-        return pdwCurrentBrightness.getValue().toString();
+        // todo
+        return "";
+    }
+
+    @Override
+    public void setBrightnessToZero()
+    {
+        // todo
     }
 }
