@@ -19,3 +19,6 @@ Place the release .jar in the directory `%appdata%\Microsoft\Windows\Start Menu\
 
 ### Known limitations
 Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors.
+
+
+(Johnny Deep Corporation ©2020)
