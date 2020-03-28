@@ -1,5 +1,6 @@
 
-import dialogs.ErrorDialogBuilder;
+import javax.swing.JOptionPane;
+
 import dimmer.DimmerManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,9 +19,7 @@ public class DimmitApp extends Application {
         }
         catch (Exception e)
         {
-            ErrorDialogBuilder.create()
-                    .withErrorMsg(e.getMessage())
-                    .showAndShutdown();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

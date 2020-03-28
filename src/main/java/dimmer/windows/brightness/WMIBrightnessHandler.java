@@ -14,7 +14,6 @@ import dimmer.MonitorInfo;
  *
  * We'll use the WMI4Java library that runs the queries through VBSScript.
  *
- * todo: find a way to know which monitor id (InstanceName) we're dealing with so we get the correct brightness value
  */
 class WMIBrightnessHandler implements WindowsBrightnessHandler
 {
@@ -70,9 +69,18 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
         return modelAndBrightnessMap;
     }
 
+    /**
+     * LIMITATION
+     * ================================
+     * Sets brightness to ALL displays that support adjusting the brightness through software!
+     * This is a limitation of the WMI api, can't choose which monitor we want to set the brightness to.
+     *
+     * @param brightnessNumber
+     */
     @Override
-    public void setBrightness(int brightnessNumber)
+    public void setBrightness(int brightnessNumber) throws Exception
     {
-        // todo
+        String setBrightnessCommand = "powershell.exe -command \"{$brightness = " + brightnessNumber + " $delay = 5 $myMonitor = Get-WmiObject -Namespace root\\wmi -Class WmiMonitorBrightnessMethods $myMonitor.wmisetbrightness($delay, $brightness)}\"";
+        Runtime.getRuntime().exec(setBrightnessCommand);
     }
 }

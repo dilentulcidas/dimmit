@@ -31,7 +31,6 @@
             <artifactId>WMI4Java</artifactId>
             <version>1.6.3</version>
         </dependency>
-
     </dependencies>
 
 </project>

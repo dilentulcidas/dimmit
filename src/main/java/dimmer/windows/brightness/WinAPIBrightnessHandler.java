@@ -1,6 +1,7 @@
 package dimmer.windows.brightness;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import com.sun.jna.platform.win32.Dxva2;
 import com.sun.jna.platform.win32.PhysicalMonitorEnumerationAPI;
@@ -29,7 +30,38 @@ class WinAPIBrightnessHandler implements WindowsBrightnessHandler
     public String getCurrentBrightness()
     {
         final StringBuilder currentBrightnessBuilder = new StringBuilder();
-        // Go through the available monitors. Filter to the monitor with our monitorInfo's id. Get its brightness.
+        getPhysicalMonitorHandle(monitorHandle -> {
+            WinDef.DWORDByReference pdwMinimumBrightness = new WinDef.DWORDByReference();
+            WinDef.DWORDByReference pdwCurrentBrightness = new WinDef.DWORDByReference();
+            WinDef.DWORDByReference pdwMaximumBrightness = new WinDef.DWORDByReference();
+            Dxva2.INSTANCE.GetMonitorBrightness(monitorHandle, pdwMinimumBrightness, pdwCurrentBrightness, pdwMaximumBrightness);
+
+            currentBrightnessBuilder.append(pdwCurrentBrightness.getValue().toString());
+        });
+
+        String currentBrightness = currentBrightnessBuilder.toString();
+        if (!currentBrightness.isEmpty())
+        {
+            return currentBrightness;
+        }
+        else
+        {
+            throw new IllegalStateException("Failed to get current brightness using WinAPI!");
+        }
+    }
+
+    @Override
+    public void setBrightness(int brightnessNumber)
+    {
+        getPhysicalMonitorHandle(monitorHandle -> Dxva2.INSTANCE.SetMonitorBrightness(monitorHandle, brightnessNumber));
+    }
+
+    /**
+     * Fetches the monitor handle based on our {@link MonitorInfo} object. The parameter allows you to
+     * call whatever you want related to the handle after it's obtained.
+     */
+    private void getPhysicalMonitorHandle(Consumer<WinNT.HANDLE> whateverYouWantToDoWithTheHandle)
+    {
         User32.INSTANCE.EnumDisplayMonitors(null, null, new WinUser.MONITORENUMPROC() {
             @Override
             public int apply(WinUser.HMONITOR hMonitor, WinDef.HDC hdc, WinDef.RECT rect, WinDef.LPARAM lparam)
@@ -50,32 +82,13 @@ class WinAPIBrightnessHandler implements WindowsBrightnessHandler
                     Dxva2.INSTANCE.GetPhysicalMonitorsFromHMONITOR(hMonitor, monitorCount, physMons);
                     WinNT.HANDLE physicalMonitorHandle = physMons[0].hPhysicalMonitor;
 
-                    // Get current brightness
-                    WinDef.DWORDByReference pdwMinimumBrightness = new WinDef.DWORDByReference();
-                    WinDef.DWORDByReference pdwCurrentBrightness = new WinDef.DWORDByReference();
-                    WinDef.DWORDByReference pdwMaximumBrightness = new WinDef.DWORDByReference();
-                    Dxva2.INSTANCE.GetMonitorBrightness(physicalMonitorHandle, pdwMinimumBrightness, pdwCurrentBrightness, pdwMaximumBrightness);
+                    whateverYouWantToDoWithTheHandle.accept(physicalMonitorHandle);
 
-                    currentBrightnessBuilder.append(pdwCurrentBrightness.getValue().toString());
+                    // Once finished destroy so we free resources
+                    Dxva2.INSTANCE.DestroyPhysicalMonitors(monitorCount, physMons);
                 }
                 return 1;
             }
         }, new WinDef.LPARAM(0));
-
-        String currentBrightness = currentBrightnessBuilder.toString();
-        if (!currentBrightness.isEmpty())
-        {
-            return currentBrightness;
-        }
-        else
-        {
-            throw new IllegalStateException("Failed to get current brightness using WinAPI!");
-        }
-    }
-
-    @Override
-    public void setBrightness(int brightnessNumber)
-    {
-        // todo
     }
 }

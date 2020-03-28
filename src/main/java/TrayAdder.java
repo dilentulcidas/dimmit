@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import dialogs.ErrorDialogBuilder;
 import dimmer.DimmerManager;
 import javafx.application.Platform;
 
@@ -45,9 +44,7 @@ class TrayAdder
             // App requires system tray support, just exit if there is no support
             if (!SystemTray.isSupported())
             {
-                ErrorDialogBuilder.create()
-                        .withErrorMsg("System tray support is required to run this application! Exiting.")
-                        .showAndShutdown();
+                JOptionPane.showMessageDialog(null, "System tray support is required to run this application! Exiting.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
             // Set up the system tray
@@ -59,9 +56,7 @@ class TrayAdder
         }
         catch (Exception e)
         {
-            ErrorDialogBuilder.create()
-                    .withErrorMsg(e.getMessage())
-                    .showAndShutdown();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
