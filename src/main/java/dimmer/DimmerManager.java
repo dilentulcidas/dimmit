@@ -32,4 +32,9 @@ public interface DimmerManager
      * @param monitorInfo Monitor to undim
      */
     void undim(MonitorInfo monitorInfo);
+
+    /**
+     * Undims all monitors. Reverts them all back to the former brightness before being dimmed.
+     */
+    void undimAll();
 }

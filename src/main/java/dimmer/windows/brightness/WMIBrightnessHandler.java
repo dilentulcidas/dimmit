@@ -1,6 +1,7 @@
 package dimmer.windows.brightness;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +48,7 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
 
     /**
      * Process returned string from WMI4Java query in {@link #getCurrentBrightness()}
-     * so that we get the following map format {monitor_id, brightness_value}
+     * so that we get the following map format {monitor_id, brightness_value}.
      */
     private Map<String, String> processGetBrightnessWMIQueryResponse(String response)
     {
@@ -70,17 +71,14 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
     }
 
     /**
-     * LIMITATION
-     * ================================
-     * Sets brightness to ALL displays that support adjusting the brightness through software!
-     * This is a limitation of the WMI api, can't choose which monitor we want to set the brightness to.
-     *
-     * @param brightnessNumber
+     * Gets our monitor instance from the WmiMonitorBrightnessMethods then
+     * acts on it to set the brightness.
      */
     @Override
     public void setBrightness(int brightnessNumber) throws Exception
     {
-        String setBrightnessCommand = "powershell.exe -command \"{$brightness = " + brightnessNumber + " $delay = 5 $myMonitor = Get-WmiObject -Namespace root\\wmi -Class WmiMonitorBrightnessMethods $myMonitor.wmisetbrightness($delay, $brightness)}\"";
+        String scriptPath = getClass().getClassLoader().getResource("WMISetBrightness.ps1").getPath().substring(1);
+        String setBrightnessCommand = "Powershell.exe -ExecutionPolicy Bypass -File " + scriptPath + " \"" + brightnessNumber + "\"";
         Runtime.getRuntime().exec(setBrightnessCommand);
     }
 }

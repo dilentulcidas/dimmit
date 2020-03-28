@@ -1,11 +1,9 @@
 import java.awt.CheckboxMenuItem;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import dimmer.DimmerManager;
 import dimmer.MonitorInfo;
-import dimmer.OSType;
 
 class MonitorCheckItems
 {
@@ -41,39 +39,11 @@ class MonitorCheckItems
                 // If they are then revert the brightness back to original values. Otherwise dim the monitor that was just unticked.
                 if (areAllMonitorsUnchecked())
                 {
-                    dimmerManager.undim(changedMonitorInfo);
+                    dimmerManager.undimAll();
                 } else
                 {
                     dimmerManager.dim(changedMonitorInfo);
                 }
-            }
-
-            /**
-             * In Windows there's a limitation with the WMI API which is in charge of
-             * adjusting the brightness of screens which are adjustable through software
-             * (such as laptop screens). When you adjust the brightness of one of these screens
-             * it will adjust for all other screens too.
-             *
-             * So if you have two laptop screens connected then it'll adjust the brightness for all these screens at once.
-             *
-             * We're going to handle the ticks differently in Windows case due to this. If you tick
-             * a dynamically adjustable brightness monitor, then it'll tick all of those. Same with unticking.
-             *
-             * This peculiarity is handled in {@link dimmer.DimmerForWindows}
-             */
-            if (OSDetector.getOperatingSystemType() == OSType.Windows && changedMonitorInfo.isBrightnessDynamicallyAdjustable())
-            {
-                // Tick/untick the other dynamically adjustable monitors too
-                dimmerManager.getInformationOfAllMonitors()
-                        .stream()
-                        .filter(MonitorInfo::isBrightnessDynamicallyAdjustable)
-                        .forEach(dynamicBrightnessAdjustMonitor -> {
-                            CHECK_MENU_ITEMS.stream()
-                                    .filter(monitorCheckBoxItem -> monitorCheckBoxItem.getName().equalsIgnoreCase(dynamicBrightnessAdjustMonitor.getMonitorId()))
-                                    .findFirst()
-                                    .get()
-                                    .setState(isTicked);
-                        });
             }
         });
         return checkMenuItem;

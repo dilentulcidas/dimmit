@@ -33,4 +33,10 @@ public class DimmerForLinux implements DimmerManager
     {
         throw new IllegalStateException("Operating system not supported!");
     }
+
+    @Override
+    public void undimAll()
+    {
+        throw new IllegalStateException("Operating system not supported!");
+    }
 }
