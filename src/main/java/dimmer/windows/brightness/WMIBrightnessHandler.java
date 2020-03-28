@@ -71,7 +71,7 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
     }
 
     @Override
-    public void setBrightnessToZero()
+    public void setBrightness(int brightnessNumber)
     {
         // todo
     }

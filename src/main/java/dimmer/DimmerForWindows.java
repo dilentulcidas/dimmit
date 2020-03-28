@@ -37,27 +37,31 @@ public class DimmerForWindows implements DimmerManager
     @Override
     public void dimAllExcept(List<MonitorInfo> selectedMonitors)
     {
-        selectedMonitors.forEach(monitor ->
-        {
-            WindowsBrightnessHandler brightnessHandler = WindowsBrightnessHandlerFactory.from(monitor);
-            // Save current brightness
-            formerBrightnessValues.put(monitor.getMonitorId(), brightnessHandler.getCurrentBrightness());
-            // Change brightness to zero
-            brightnessHandler.setBrightnessToZero();
-        });
+        monitorsInfos.stream()
+                .filter(monitor -> !selectedMonitors.contains(monitor)) // Get the monitors which weren't selected
+                .forEach(monitorToDim ->
+                {
+                    WindowsBrightnessHandler brightnessHandler = WindowsBrightnessHandlerFactory.from(monitorToDim);
+                    // Save current brightness if haven't saved already
+                    formerBrightnessValues.putIfAbsent(monitorToDim.getMonitorId(), brightnessHandler.getCurrentBrightness());
+                    // Change brightness to zero
+                    brightnessHandler.setBrightness(0);
+                });
     }
 
     @Override
     public void dim(MonitorInfo monitorInfo)
     {
         WindowsBrightnessHandler brightnessHandler = WindowsBrightnessHandlerFactory.from(monitorInfo);
-        // todo
+        formerBrightnessValues.putIfAbsent(monitorInfo.getMonitorId(), brightnessHandler.getCurrentBrightness());
+        brightnessHandler.setBrightness(0);
     }
 
     @Override
     public void undim(MonitorInfo monitorInfo)
     {
         WindowsBrightnessHandler brightnessHandler = WindowsBrightnessHandlerFactory.from(monitorInfo);
-        // todo
+        brightnessHandler.setBrightness(Integer.parseInt(formerBrightnessValues.get(monitorInfo.getMonitorId())));
+        formerBrightnessValues.remove(monitorInfo.getMonitorId());
     }
 }
