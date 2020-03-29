@@ -17,7 +17,7 @@ Double-clicking .jar file doesn't open anything? Try this https://stackoverflow.
 ### When do you want to use this
 - Playing a game on one monitor while the other monitors keep reminding you about your crappy graphics card and how you barely run the game in one monitor, so you dim them to teach them a lesson;
 - Watching a movie but the other monitors are radiating you with light and blinding you, ruining your movie experience;
-- Disco party. easy to dj, the more monitors the better. 
+- Disco party. easy to dj, the more monitors the better for the ultimate rave.
 
 ### Preview
 ![dimmit preview](https://i.gyazo.com/b97a7a9da6ab969d07003386dca46b7f.png)
