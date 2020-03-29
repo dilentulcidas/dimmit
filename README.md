@@ -8,7 +8,7 @@ Select which monitors you want to keep undimmed and this app will dim the remain
 Currently only supported for Windows 7 or above.
 
 ### Instructions
-Download the .jar from `Releases` and double click it to have it running in the background. Right click in the tray icon to start messing around with it.
+Download the .jar from https://github.com/dilentulcidas/dimmit/releases and double click it to have it running in the background. Right click in the tray icon to start messing around with it.
 
 If you want it to start running every time you start your computer then place the jar file in the directory `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup`.
 
