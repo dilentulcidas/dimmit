@@ -16,6 +16,8 @@ If you want it to start running every time you start your computer then place th
 
 Double-clicking .jar file doesn't open anything? Try this https://stackoverflow.com/a/39953128 then try again.
 
+If you want to turn off the monitors instead of dimming: open http://www.e-try.com/black.htm in your browser, drag the browser window into the monitor you want off and press F11. Apply for the other monitors.
+
 ### Dim modes
 You'll notice there are two options you can choose from:
 - `Black`: The unticked monitors will get its brightness adjusted to the minimum and the screen will turn black. You can then return
