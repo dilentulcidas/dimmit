@@ -12,6 +12,8 @@ Download the .jar from `Releases` and double click it to have it running in the 
 
 If you want it to start running every time you start your computer then place the jar file in the directory `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup`.
 
+Double-clicking .jar file doesn't open anything? Try this https://stackoverflow.com/a/39953128 then try again.
+
 ### When do you want to use this
 - Playing a game on one monitor while the other monitors keep reminding you about your crappy graphics card and how you barely run the game in one monitor, so you dim them to teach them a lesson;
 - Watching a movie but the other monitors are radiating you with light and blinding you, ruining your movie experience;
