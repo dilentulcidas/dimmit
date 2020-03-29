@@ -25,5 +25,3 @@ Double-clicking .jar file doesn't open anything? Try this https://stackoverflow.
 
 ### Limitation
 Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors. You'll still see the monitor light blinking in some cases though which is the monitor laughing at you.
-
-(Johnny Deep Corporation ©2020)
