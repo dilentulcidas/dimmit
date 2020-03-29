@@ -21,7 +21,7 @@ If you want it to start running every time you start your computer then place th
 ![dimmit preview](https://i.gyazo.com/b97a7a9da6ab969d07003386dca46b7f.png)
 
 
-### Known limitations
-- Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors. You'll still see the monitor light blinking in some cases though which is the monitor laughing at you.
+### Limitation
+Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors. You'll still see the monitor light blinking in some cases though which is the monitor laughing at you.
 
 (Johnny Deep Corporation ©2020)
