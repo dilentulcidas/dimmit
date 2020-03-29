@@ -53,7 +53,13 @@ class WinAPIBrightnessHandler implements WindowsBrightnessHandler
     @Override
     public void setBrightness(int brightnessNumber)
     {
-        getPhysicalMonitorHandle(monitorHandle -> Dxva2.INSTANCE.SetMonitorBrightness(monitorHandle, brightnessNumber));
+        getPhysicalMonitorHandle(monitorHandle -> {
+            WinDef.BOOL bool = Dxva2.INSTANCE.SetMonitorBrightness(monitorHandle, brightnessNumber);
+            if (!bool.booleanValue())
+            {
+                throw new IllegalStateException("Failed to set brightness of monitor ["+monitorInfo.getMenuItemName()+"] to value ["+brightnessNumber+"]!");
+            }
+        });
     }
 
     /**

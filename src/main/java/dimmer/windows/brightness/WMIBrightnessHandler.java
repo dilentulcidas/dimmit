@@ -1,11 +1,15 @@
 package dimmer.windows.brightness;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.apache.commons.io.IOUtils;
 
 import com.profesorfalken.wmi4java.WMI4Java;
 import dimmer.MonitorInfo;
@@ -43,7 +47,7 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
                 .filter(entry -> entry.getKey().toLowerCase().startsWith(monitorInfo.getMonitorId().toLowerCase()))
                 .map(Map.Entry::getValue)
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new IllegalStateException("Failed to get current brightness using WMI!"));
     }
 
     /**
@@ -79,6 +83,11 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
     {
         String scriptPath = getClass().getClassLoader().getResource("WMISetBrightness.ps1").getPath().substring(1);
         String setBrightnessCommand = "Powershell.exe -ExecutionPolicy Bypass -File " + scriptPath + " \"" + brightnessNumber + "\"";
-        Runtime.getRuntime().exec(setBrightnessCommand);
+        Process result = Runtime.getRuntime().exec(setBrightnessCommand);
+        String errMsg = IOUtils.toString(result.getErrorStream(), Charset.defaultCharset()).trim();
+        if (!errMsg.isEmpty())
+        {
+            throw new IllegalStateException("Failure while setting brightness through WMI: " + errMsg);
+        }
     }
 }

@@ -70,7 +70,7 @@ class TrayAdder
     private static PopupMenu createPopupMenu(SystemTray systemTray, TrayIcon trayIcon, DimmerManager dimmerManager)
     {
         // Set up monitors selection question menu item
-        MenuItem monitorChoicesMenuItem = new MenuItem("Choose which to keep undimmed");
+        MenuItem monitorChoicesMenuItem = new MenuItem("Choose which monitor to keep brightness");
         monitorChoicesMenuItem.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
 
         // Set up `About` menu item
