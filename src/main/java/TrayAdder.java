@@ -1,3 +1,4 @@
+import java.awt.CheckboxMenuItem;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.MenuItem;
@@ -7,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -69,6 +71,10 @@ class TrayAdder
 
     private static PopupMenu createPopupMenu(SystemTray systemTray, TrayIcon trayIcon, DimmerManager dimmerManager)
     {
+        // Mode selection
+        MenuItem dimmingModeMenuItem = new MenuItem("Dimming mode");
+        dimmingModeMenuItem.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+
         // Set up monitors selection question menu item
         MenuItem monitorChoicesMenuItem = new MenuItem("Choose which monitor to keep brightness");
         monitorChoicesMenuItem.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
@@ -79,6 +85,7 @@ class TrayAdder
                 "Dimmer is a lightweight application suitable for multiple displays.\n\n" +
                 "Select which monitors you want to keep undimmed and this app will dim the remaining connected monitors to the minimum brightness.\n" +
                 "Reverts to the previous brightness values once you're happy to have all monitors undimmed.\n\n" +
+                "If using 'Black' dimming mode then you can exit of it when clicking on the black screen. \n\n" +
                 "Developed by Johnny Deep ©2020";
         aboutItem.addActionListener(event ->
         {
@@ -101,8 +108,11 @@ class TrayAdder
         });
 
         PopupMenu popupMenu = new PopupMenu();
+        popupMenu.add(dimmingModeMenuItem);
+        createDimModeItems(dimmerManager).forEach(popupMenu::add);
+        popupMenu.addSeparator();
         popupMenu.add(monitorChoicesMenuItem);
-        createMonitorItems(dimmerManager).forEach(popupMenu::add); // Add the monitor checkbox selections
+        createMonitorItems(dimmerManager).forEach(popupMenu::add);
         popupMenu.addSeparator();
         popupMenu.add(aboutItem);
         popupMenu.addSeparator();
@@ -112,6 +122,11 @@ class TrayAdder
 
     private static List<? extends MenuItem> createMonitorItems(DimmerManager dimmerManager)
     {
-        return MonitorCheckItems.from(dimmerManager);
+        return MonitorMenuItemsManager.from(dimmerManager);
+    }
+
+    private static List<? extends MenuItem> createDimModeItems(DimmerManager dimmerManager)
+    {
+        return DimModeMenuItemsManager.get(dimmerManager);
     }
 }

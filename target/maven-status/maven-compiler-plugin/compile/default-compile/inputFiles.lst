@@ -1,9 +1,12 @@
+D:\Github_Repos\Dimmit\src\main\java\DimmingMode.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\windows\brightness\WindowsBrightnessHandler.java
 D:\Github_Repos\Dimmit\src\main\java\DimmitApp.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\DimmerForLinux.java
+D:\Github_Repos\Dimmit\src\main\java\ScreenBlacker.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\DimmerForWindows.java
+D:\Github_Repos\Dimmit\src\main\java\MonitorMenuItemsManager.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\windows\brightness\WindowsBrightnessHandlerFactory.java
-D:\Github_Repos\Dimmit\src\main\java\MonitorCheckItems.java
+D:\Github_Repos\Dimmit\src\main\java\DimModeMenuItemsManager.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\DimmerForMacOS.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\DimmerManager.java
 D:\Github_Repos\Dimmit\src\main\java\dimmer\windows\WindowsMonitorsInfoRetriever.java

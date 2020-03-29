@@ -11,6 +11,9 @@ public class DimmitApp extends Application {
     public void start(Stage primaryStage) {
         try
         {
+            // Cache the monitor sizes
+            ScreenBlacker.init();
+
             // At first launch will fetches all the monitors connected to the system
             DimmerManager dimmerManager = OSDetector.getOperatingSystemType().getDimmerRunner();
 
