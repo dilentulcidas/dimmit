@@ -95,12 +95,14 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
                 scriptPath = scriptPath.substring(6);
             }
         }
-        String setBrightnessCommand = "Powershell.exe -ExecutionPolicy Bypass -File " + scriptPath + " \"" + brightnessNumber + "\"";
+        String setBrightnessCommand = "Powershell.exe -ExecutionPolicy Bypass -File " + scriptPath + " " +
+                "-monitorId \"" + monitorInfo.getMonitorId() + "\" " +
+                "-brightness \"" + brightnessNumber + "\"";
         Process result = Runtime.getRuntime().exec(setBrightnessCommand);
         String errMsg = IOUtils.toString(result.getErrorStream(), Charset.defaultCharset()).trim();
         if (!errMsg.isEmpty())
         {
-            throw new IllegalStateException("Failure while setting brightness through WMI: " + errMsg);
+            throw new IllegalStateException("Failure while setting brightness through WMI: \n" + errMsg);
         }
     }
 }

@@ -1,6 +1,7 @@
-param(
-[string]$a
-)
+ param (
+    [Parameter(Mandatory=$true)][string]$monitorId,
+    [Parameter(Mandatory=$true)][string]$brightness
+ )
 
-$monitorToActOn = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods | Where-Object {$_.InstanceName -like "DISPLAY\LGD0470\5&4729faa&0&UID4353_0*"}
-$monitorToActOn.wmisetbrightness(5, $a)
+$monitorToActOn = Get-WmiObject -Namespace root\wmi -Class WmiMonitorBrightnessMethods | Where-Object {$_.InstanceName -like ($monitorId + "*")}
+$monitorToActOn.wmisetbrightness(5, $brightness)

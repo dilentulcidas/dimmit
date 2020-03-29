@@ -50,7 +50,7 @@ class TrayAdder
             // Set up the system tray
             SystemTray systemTray = SystemTray.getSystemTray();
             TrayIcon trayIcon = createTrayIcon(TRAY_ICON_URL);
-            trayIcon.setToolTip("Dimmer");
+            trayIcon.setToolTip("dimmit");
             trayIcon.setPopupMenu(createPopupMenu(systemTray, trayIcon, dimmerManager));
             systemTray.add(trayIcon);
         }
