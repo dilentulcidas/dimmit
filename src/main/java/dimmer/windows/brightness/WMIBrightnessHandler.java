@@ -81,23 +81,9 @@ class WMIBrightnessHandler implements WindowsBrightnessHandler
     @Override
     public void setBrightness(int brightnessNumber) throws Exception
     {
-        String scriptPath = getClass().getClassLoader().getResource("WMISetBrightness.ps1").getPath();
-        if (scriptPath != null && !scriptPath.isEmpty())
-        {
-            if (scriptPath.charAt(0) == '/')
-            {
-                // Running locally it always returns with a leading backslash...
-                scriptPath = scriptPath.substring(1);
-            }
-            else if (scriptPath.startsWith("file:/"))
-            {
-                // On a .jar it returns with `file:/` appended which messes up with the powershell script
-                scriptPath = scriptPath.substring(6);
-            }
-        }
-        String setBrightnessCommand = "Powershell.exe -ExecutionPolicy Bypass -File " + scriptPath + " " +
-                "-monitorId \"" + monitorInfo.getMonitorId() + "\" " +
-                "-brightness \"" + brightnessNumber + "\"";
+        String setBrightnessCommand = "powershell.exe -command \"$monitorToActOn = Get-WmiObject -Namespace root\\wmi -Class WmiMonitorBrightnessMethods | " +
+                                            "Where-Object {$_.InstanceName -like ('"+monitorInfo.getMonitorId()+"' + '*')}; " +
+                                      "$monitorToActOn.wmisetbrightness(0,"+brightnessNumber+")\"";
         Process result = Runtime.getRuntime().exec(setBrightnessCommand);
         String errMsg = IOUtils.toString(result.getErrorStream(), Charset.defaultCharset()).trim();
         if (!errMsg.isEmpty())
