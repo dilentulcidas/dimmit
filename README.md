@@ -7,7 +7,10 @@ Select which monitors you want to keep undimmed and this app will dim the remain
 
 Currently only supported for Windows 7 or above.
 
-Place the release .jar in the directory `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup` so it runs in the background from windows start up.
+### Instructions
+Download the .jar from `Releases` and double click it to have it running in the background. Right click in the tray icon to start messing around with it.
+
+If you want it to start running every time you start your computer then place the jar file in the directory `%appdata%\Microsoft\Windows\Start Menu\Programs\Startup`.
 
 ### When do you want to use this
 - Playing a game on one monitor while the other monitors keep reminding you about your crappy graphics card and how you barely run the game in one monitor, so you dim them to teach them a lesson;
@@ -19,7 +22,6 @@ Place the release .jar in the directory `%appdata%\Microsoft\Windows\Start Menu\
 
 
 ### Known limitations
-Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors.
-
+- Some monitors are stubborn and don't let you allow to change the brightness through software so this app may not work for those type of monitors. You'll still see the monitor light blinking in some cases though which is the monitor laughing at you.
 
 (Johnny Deep Corporation ©2020)
